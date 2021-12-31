@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  app:
+    image: node:lts
+    container_name: 'docker-node-test-environment'
+    tty: true
+    command: npm start
+    volumes:
+      - ./src:/src
+    working_dir: "/src"
+    ports:
+      - 8080:8080
+  db:
+    image: postgres
+    container_name: 'docker-node-test-postgres'
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=sample
+    ports:
+      - 5432:5432
+volumes:
+  db_data:
